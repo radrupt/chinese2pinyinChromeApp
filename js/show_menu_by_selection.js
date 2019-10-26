@@ -142,7 +142,7 @@ function viewPinyin() {
 	pinyinPopup.style.top = `${top}px`;
 	pinyinPopup.style.left = `${left}px`;
 	const selectedText = window.getSelection().toString().trim();
-	postFormData('http://localhost:8080/pinyin/trans2Pinyin', {text: selectedText})
+	postFormData('https://divergence.radru.com/pinyin/trans2Pinyin', {text: selectedText})
 	.then(function(response) {
 		pinyinPopup.innerHTML = `
 				<div class="btn-area">
