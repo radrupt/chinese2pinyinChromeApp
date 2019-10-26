@@ -15,6 +15,7 @@
     "https://*/",
     "tabs"
   ],
+  "web_accessible_resources": ["js/inject.js"],
   "content_scripts": [
 		{
 			"matches": [
