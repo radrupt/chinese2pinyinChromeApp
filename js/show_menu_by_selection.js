@@ -63,7 +63,7 @@ function init() {
 		const position = getFixedPosition();
 		if (selectedText && position && position.width) {
 			popup.style.display = "";
-			const top = position.bottom + 10;
+			const top = position.top - 52;
 			const left = position.left + (position.width - popup.offsetWidth) / 2;
 			popup.style.top = `${top}px`;
 			popup.style.left = `${left}px`;
@@ -116,27 +116,47 @@ function injectCustomJs(jsPath)
 	document.body.appendChild(temp);
 }
 
+async function postFormData(url = '', data = {}) {
+	// Default options are marked with *
+	const searchParams = Object.keys(data).map((key) => {
+		return encodeURIComponent(key) + '=' + encodeURIComponent(data[key]);
+	  }).join('&');
+	const response = await fetch(url, {
+	  method: 'POST', // *GET, POST, PUT, DELETE, etc.
+	  cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+	  headers: {
+		'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
+	  },
+	  redirect: 'follow', // manual, *follow, error
+	  referrer: 'no-referrer', // no-referrer, *client
+	  body: searchParams // body data type must match "Content-Type" header
+	});
+	return await response.json(); // parses JSON response into native JavaScript objects
+  }
+
 function viewPinyin() {
 	popup.style.display = "none";
 	const position = getFixedPosition();
-	const top = position.bottom + 10;
+	const top = position.top - 52;
 	const left = position.left + (position.width - pinyinPopup.offsetWidth) / 2;
 	pinyinPopup.style.top = `${top}px`;
 	pinyinPopup.style.left = `${left}px`;
 	const selectedText = window.getSelection().toString().trim();
-	pinyinPopup.innerHTML = `
-			<div class="btn-area">
-				${selectedText}
+	postFormData('http://localhost:8080/pinyin/trans2Pinyin', {text: selectedText})
+	.then(function(response) {
+		pinyinPopup.innerHTML = `
+				<div class="btn-area">
+					${response}
+				</div>
 			</div>
-		</div>
-	`;
-	pinyinPopup.style.display = "";
-	console.log(3232)
+		`;
+		pinyinPopup.style.display = "";
+	})
+	
 }
 
 window.addEventListener("message", function(e)
 {
-	console.log('收到消息：', e.data);
 	if(e.data && e.data.cmd == 'invoke') {
 		eval('('+e.data.code+')');
 	}

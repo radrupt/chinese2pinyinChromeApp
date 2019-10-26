@@ -13,7 +13,8 @@
     "storage",
     "http://*/",
     "https://*/",
-    "tabs"
+    "tabs",
+    "webRequest"
   ],
   "web_accessible_resources": ["js/inject.js"],
   "content_scripts": [
