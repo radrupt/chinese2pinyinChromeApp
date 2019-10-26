@@ -1,0 +1,28 @@
+{
+  "manifest_version": 2,
+  "name": "记忆体",
+  "version": "0.1",
+  "description": "记录划词，每日推送，定期回顾",
+  "icons": {
+    "16": "images/memory-16.png",
+    "128": "images/memory-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage",
+    "http://*/",
+    "https://*/",
+    "tabs"
+  ],
+  "content_scripts": [
+		{
+			"matches": [
+        "*://*/*"
+      ],
+      "all_frames": true,
+			"js": ["js/show_menu_by_selection.js"],
+			"run_at": "document_start"
+		}
+	]
+}
