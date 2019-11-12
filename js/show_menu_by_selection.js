@@ -17,7 +17,7 @@ function init() {
 		let {
 			top, bottom, left, right, width, height
 		} = clientRect;
-		const scrollTop = document.body.scrollTop;
+		const scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
 		top += scrollTop;
 		bottom += scrollTop;
 		const scrollLeft = document.body.scrollLeft;
@@ -85,7 +85,7 @@ function init() {
 	};
 	
 	{
-		const delay_ms = 500;
+		const delay_ms = 160;
 		const debouncedUpdateMenu = debounce(updateMenu, delay_ms);
 		document.addEventListener("selectionchange", () => {
 			popup.style.display = "none";
