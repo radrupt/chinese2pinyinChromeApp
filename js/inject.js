@@ -21,5 +21,14 @@ function sendMessageToContentScriptByPostMessage(data)
 		hiddenDiv.dispatchEvent(customEvent);
 	}
 	window.sendMessageToContentScriptByEvent = sendMessageToContentScriptByEvent;
+	window.addEventListener("message", function (event) {
+		// We only accept messages from ourselves
+		if (event.source != window) { return; }
+
+		// Make sure we're looking at the correct event:
+		if (event.data.type && (event.data.type == "invokeContentScript")) {
+			window.postMessage({cmd: 'invoke', code: event.data.text}, '*');
+		}
+	}, false);
 })();
 
