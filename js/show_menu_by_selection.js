@@ -223,6 +223,6 @@ window.addEventListener("message", function(e)
 
 chrome.storage.sync.get('token', function(items) {
 	if(items.token) {
-		var token = items.token;
+		token = items.token || "";
 	}
 });
