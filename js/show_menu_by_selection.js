@@ -1,8 +1,8 @@
 document.addEventListener('DOMContentLoaded', function(event) {
     init()
 });
-var host = 'http://localhost:3000'
-// var host = 'https://divergence.radru.com'
+// var host = 'http://localhost:3000'
+var host = 'https://divergence.radru.com'
 var token;
 var popup;
 var pinyinPopup;
